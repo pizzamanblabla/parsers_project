@@ -1,0 +1,9 @@
+services:
+    parsers.command.update:
+        class: ParserBundle\Command\Update
+        arguments:
+            - '@parsers.operation.update.service'
+            - '@parsers.operation.parse.request_transformer'
+            - '@logger'
+        tags:
+            - { name: console.command }

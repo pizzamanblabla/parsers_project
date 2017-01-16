@@ -1,0 +1,21 @@
+services:
+    parsers.repository_factory:
+        class: ParserBundle\Entity\Repository\Factory
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+    parsers.operation.parse.service:
+        class: ParserBundle\Operation\Parse\Service\Service
+
+    parsers.operation.parse.request_transformer:
+        class: ParserBundle\Operation\Parse\Transformer\Request\Transformer
+        arguments:
+            - '@parsers.repository_factory'
+
+    parsers.operation.update.service:
+        class: ParserBundle\Operation\Update\Service\Service
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@parsers.repository_factory'
+            - '@parsers.operation.parse.service'
+            - '@logger'
