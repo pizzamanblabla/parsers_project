@@ -30,6 +30,7 @@ class ParserExtension extends Extension
     private function getConfigurationList()
     {
         return [
+            'parsers.yml',
             'command.yml',
             'services.yml',
         ];

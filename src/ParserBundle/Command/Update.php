@@ -63,7 +63,7 @@ class Update extends Command
         try {
             $this->logger->info('Transforming input to internalRequest');
             $request = $this->transformer->transform($input->getArgument('key'));
-            var_dump($request);die;
+
             $this->service->behave($request);
         } catch (Exception $e) {
             $this->logger->error(

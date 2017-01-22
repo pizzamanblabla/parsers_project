@@ -1,0 +1,29 @@
+parameters:
+    parser_specific_configuration:
+        utkonos:
+            menu:
+                name: "categories"
+                xpath:
+                    group: "//*[@class='module_catalogue_left-header']"
+                    to_parse:
+                        url: ".//a/@href"
+                        name: ".//@title"
+                child_page:
+                    name: "sub_categories"
+                    xpath:
+                        group: "//*[@class='module_catalogue_left-child']"
+                        to_parse:
+                            url: ".//a/@href"
+                            name: ".//@title"
+                            pagination: "//*[@class='el_paginate']//span/following-sibling::a[1]"
+                    child_page:
+                        name: "product"
+                        xpath:
+                            group: "//*[contains(@class,'goods_view_box')]/div[contains(@class,'goods_view-item')]"
+                            to_parse:
+                                id: "./@data-item_id"
+                                url: ".//*[contains(@class,'goods_view_box-caption')]//a/@href"
+                                name: ".//*[contains(@class,'goods_view_box-caption')]//@title"
+                                price: ".//@data-static-old-price"
+                                price_with_discount: ".//@data-static-now-price"
+                                variants_all: ".//*[contains(@class,'goods_variants_property-item')]/span"

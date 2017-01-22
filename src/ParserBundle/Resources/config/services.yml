@@ -1,4 +1,7 @@
 services:
+    guzzle.client:
+        class: GuzzleHttp\Client
+
     parsers.repository_factory:
         class: ParserBundle\Entity\Repository\Factory
         arguments:
@@ -6,6 +9,30 @@ services:
 
     parsers.operation.parse.service:
         class: ParserBundle\Operation\Parse\Service\Service
+        arguments:
+            - '@parsers.operation.parse.parse_from_website_strategy'
+            - '@logger'
+
+    parsers.operation.parse.parse_from_website_strategy:
+        class: ParserBundle\Operation\Parse\ParsingStrategy\ParseFromWebsiteStrategy
+        arguments:
+            - '@parsers.operation.parse.dynamic_data_extractor.html_to_array_data_extractor'
+            - '@parsers.parser_config'
+            - '@parsers.protocol'
+
+    parsers.operation.parse.dynamic_data_extractor.html_to_array_data_extractor:
+        class: ParserBundle\Operation\Parse\DataExtractor\HtmlToArrayDataExtractor
+
+    parsers.parser_config:
+        class: ParserBundle\ParserConfig\ParserConfig
+        arguments:
+            - '%parser_specific_configuration%'
+
+    parsers.protocol:
+        class: ParserBundle\Interaction\Protocol\Protocol
+        arguments:
+            - '@guzzle.client'
+            - '@logger'
 
     parsers.operation.parse.request_transformer:
         class: ParserBundle\Operation\Parse\Transformer\Request\Transformer

@@ -2,7 +2,7 @@
 
 namespace ParserBundle\Internal\Transformer\Request;
 
-use ParserBundle\Internal\Request\InternalRequestInterface;
+use ParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 
 interface TransformerInterface
 {

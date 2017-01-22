@@ -4,8 +4,8 @@ namespace ParserBundle\Operation\Update\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use ParserBundle\Entity\Repository\FactoryInterface as RepositoryFactoryInterface;
-use ParserBundle\Internal\Request\InternalRequestInterface;
-use ParserBundle\Internal\Response\InternalResponseInterface;
+use ParserBundle\Interaction\Dto\Request\InternalRequestInterface;
+use ParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use ParserBundle\Internal\Service\BaseEntityService;
 use ParserBundle\Internal\Service\ServiceInterface;
 use Psr\Log\LoggerInterface;

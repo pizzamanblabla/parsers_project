@@ -2,7 +2,7 @@
 
 namespace ParserBundle\Operation\Parse\Dto;
 
-use ParserBundle\Internal\Request\InternalRequestInterface;
+use ParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 
 class Request implements InternalRequestInterface
 {

@@ -6,7 +6,7 @@ use ParserBundle\Entity\Exception\SourceNotFoundException;
 use ParserBundle\Entity\Repository\FactoryInterface as RepositoryFactoryInterface;
 use ParserBundle\Entity\Source;
 use ParserBundle\Internal\Exception\UnexpectedTypeException;
-use ParserBundle\Internal\Request\InternalRequestInterface;
+use ParserBundle\Interaction\Dto\Request\InternalRequestInterface;
 use ParserBundle\Internal\Transformer\Request\TransformerInterface;
 use ParserBundle\Operation\Parse\Dto\Request;
 

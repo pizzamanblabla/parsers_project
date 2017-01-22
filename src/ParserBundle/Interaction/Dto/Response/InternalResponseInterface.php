@@ -1,6 +1,6 @@
 <?php
 
-namespace ParserBundle\Internal\Response;
+namespace ParserBundle\Interaction\Dto\Response;
 
 interface InternalResponseInterface
 {
