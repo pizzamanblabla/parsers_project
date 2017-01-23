@@ -51,7 +51,7 @@ class HtmlToArrayDataExtractor extends BaseHtmlToArrayDataExtractor implements D
                 $extractedValues = $this->extractGroup($value, $xpath, $parentNode);
 
                 if ($extractedValues->length) {
-                    $extracted[$key] = $extractedValues->item(0)->textContent;
+                    $extracted[$key] = $this->resolveDataByKey($key, $extractedValues);
                 }
             }
         }
@@ -72,5 +72,34 @@ class HtmlToArrayDataExtractor extends BaseHtmlToArrayDataExtractor implements D
                 ? $xpath->query($path)
                 : $xpath->query($path, $parentNode)
             ;
+    }
+
+    /**
+     * @param string $key
+     * @param DOMNodeList $list
+     * @return array|string
+     */
+    private function resolveDataByKey(string $key, DOMNodeList $list)
+    {
+        return
+            preg_match('/_all/', $key)
+                ? $this->mapNodeList($list)
+                : $list->item(0)->textContent
+            ;
+    }
+
+    /**
+     * @param DOMNodeList $list
+     * @return array
+     */
+    private function mapNodeList(DOMNodeList $list): array
+    {
+        $nodes = [];
+
+        foreach ($list as $element) {
+            $nodes[] = $element->textContent;
+        }
+
+        return $nodes;
     }
 }

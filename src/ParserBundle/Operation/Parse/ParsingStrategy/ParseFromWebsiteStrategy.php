@@ -76,8 +76,23 @@ class ParseFromWebsiteStrategy implements ParsingStrategyInterface
 
         if (array_key_exists('child_page', $parseConfig)) {
             foreach ($parsed[$parseConfig['name']] as $key => $element) {
-                $parsedPage = $this->parseRecursively($parseConfig['child_page'], $rootUrl, $element['url']);
-                $parsed[$parseConfig['name']][$key][] = $parsedPage;
+                $parsed[$parseConfig['name']][$key] =
+                    array_merge(
+                        $parsed[$parseConfig['name']][$key],
+                        $this->parseRecursively($parseConfig['child_page'], $rootUrl, $element['url'])
+                    );
+            }
+        }
+
+        if (array_key_exists('pagination', $parseConfig)) {
+            $urlPagination = $this->dataExtractor->extract($html, $parseConfig['pagination']);
+
+            if (count($urlPagination[0])) {
+                $parsed[$parseConfig['name']] =
+                    array_merge(
+                        $parsed[$parseConfig['name']],
+                        $this->parseRecursively($parseConfig, $rootUrl, $urlPagination[0]['url'])[$parseConfig['name']]
+                    );
             }
         }
 

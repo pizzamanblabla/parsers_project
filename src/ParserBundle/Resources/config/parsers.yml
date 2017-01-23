@@ -15,9 +15,11 @@ parameters:
                         to_parse:
                             url: ".//a/@href"
                             name: ".//@title"
-                            pagination: "//*[@class='el_paginate']//span/following-sibling::a[1]"
                     child_page:
                         name: "product"
+                        pagination:
+                            to_parse:
+                                url: "//*[@class='el_paginate']//span/following-sibling::a[1]/@href"
                         xpath:
                             group: "//*[contains(@class,'goods_view_box')]/div[contains(@class,'goods_view-item')]"
                             to_parse:
