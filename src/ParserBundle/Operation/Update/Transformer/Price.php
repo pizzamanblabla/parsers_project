@@ -13,6 +13,8 @@ class Price implements ArrayToEntityTransformerInterface
     {
         return
             (new PriceEntity())
+                ->setProduct($data['product'])
+                ->setValue($data['price'])
             ;
     }
 }

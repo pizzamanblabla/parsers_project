@@ -22,6 +22,11 @@ class Request implements InternalRequestInterface
     private $rootUrl;
 
     /**
+     * @var string[]
+     */
+    private $parsingMap;
+
+    /**
      * @return int
      */
     public function getId()
@@ -75,4 +80,21 @@ class Request implements InternalRequestInterface
         return $this;
     }
 
+    /**
+     * @return \string[]
+     */
+    public function getParsingMap()
+    {
+        return $this->parsingMap;
+    }
+
+    /**
+     * @param \string[] $parsingMap
+     * @return Request
+     */
+    public function setParsingMap(array $parsingMap)
+    {
+        $this->parsingMap = $parsingMap;
+        return $this;
+    }
 }

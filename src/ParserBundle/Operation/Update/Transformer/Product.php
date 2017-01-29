@@ -16,8 +16,6 @@ class Product implements ArrayToEntityTransformerInterface
                 ->setName($data['name'])
                 ->setUrl($data['url'])
                 ->setCategory($data['category'])
-                ->setDescription('')
-                ->setCharacteristics(['test' => 'test'])
             ;
     }
 }

@@ -12,11 +12,6 @@ use ParserBundle\ParserConfig\ParserConfigInterface;
 class ParseFromWebsiteStrategy implements ParsingStrategyInterface
 {
     /**
-     * @var ParserConfigInterface
-     */
-    private $parserConfig;
-
-    /**
      * @var DynamicDataExtractorInterface
      */
     private $dataExtractor;
@@ -28,16 +23,13 @@ class ParseFromWebsiteStrategy implements ParsingStrategyInterface
 
     /**
      * @param DynamicDataExtractorInterface $dataExtractor
-     * @param ParserConfigInterface $parserConfig
      * @param ProtocolInterface $protocol
      */
     public function __construct(
         DynamicDataExtractorInterface $dataExtractor,
-        ParserConfigInterface $parserConfig,
         ProtocolInterface $protocol
     ) {
         $this->dataExtractor = $dataExtractor;
-        $this->parserConfig = $parserConfig;
         $this->protocol = $protocol;
     }
 
@@ -49,7 +41,7 @@ class ParseFromWebsiteStrategy implements ParsingStrategyInterface
     {
         return
             $this->parseRecursively(
-                $this->parserConfig->getMenu($request->getKey()),
+                $request->getParsingMap(),
                 $request->getRootUrl()
             );
     }

@@ -10,6 +10,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Update extends Command
@@ -52,6 +53,7 @@ class Update extends Command
             ->setName('parser:update')
             ->setDescription('Updating')
             ->addArgument('key', InputArgument::REQUIRED, 'Which parser needs to be updated?')
+            ->addOption('product', 'p', InputOption::VALUE_NONE)
         ;
     }
 
@@ -62,7 +64,12 @@ class Update extends Command
     {
         try {
             $this->logger->info('Transforming input to internalRequest');
-            $request = $this->transformer->transform($input->getArgument('key'));
+            $request = $this->transformer->transform(
+                [
+                    'key' => $input->getArgument('key'),
+                    'product' => $input->getOption('product')
+                ]
+            );
 
             $this->service->behave($request);
         } catch (Exception $e) {

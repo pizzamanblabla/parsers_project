@@ -23,7 +23,6 @@ services:
         class: ParserBundle\Operation\Parse\ParsingStrategy\ParseFromWebsiteStrategy
         arguments:
             - '@parsers.operation.parse.dynamic_data_extractor.html_to_array_data_extractor'
-            - '@parsers.parser_config'
             - '@parsers.protocol'
 
     parsers.operation.parse.dynamic_data_extractor.html_to_array_data_extractor:
@@ -44,6 +43,7 @@ services:
         class: ParserBundle\Operation\Parse\Transformer\Request\Transformer
         arguments:
             - '@parsers.repository_factory'
+            - '@parsers.parser_config'
 
     parsers.operation.update.persist_data_service_decorator:
         class: ParserBundle\Operation\Update\Service\PersistDataServiceDecorator

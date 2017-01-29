@@ -38,14 +38,14 @@ class Service implements ServiceInterface
     public function behave(InternalRequestInterface $request): InternalResponseInterface
     {
         $this->logger->info('Begin parsing');
-//        $parsed = $this->strategy->parse($request);
-//
-//        if (!is_array($parsed) || empty($parsed)) {
-//            $this->logger->warning('Parsing failed');
-//        }
+        $parsed = $this->strategy->parse($request);
+
+        if (!is_array($parsed) || empty($parsed)) {
+            $this->logger->warning('Parsing failed');
+        }
 
         //file_put_contents('test.json', json_encode($parsed));die;
-        $parsed = json_decode(file_get_contents('test.json'), 1);
+        //$parsed = json_decode(file_get_contents('test.json'), 1);
         return (new SuccessfulResponse())->setData($parsed);
     }
 }

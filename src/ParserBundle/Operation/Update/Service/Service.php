@@ -4,6 +4,7 @@ namespace ParserBundle\Operation\Update\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use ParserBundle\Entity\Category;
+use ParserBundle\Entity\Product;
 use ParserBundle\Entity\Repository\FactoryInterface as RepositoryFactoryInterface;
 use ParserBundle\Entity\Source;
 use ParserBundle\Interaction\Dto\Request\InternalRequestInterface;
@@ -90,6 +91,15 @@ class Service extends BaseEntityService
      */
     private function clearMenu(Source $source)
     {
+        $products = $this->repositoryFactory->product()->findBySource($source);
+
+        array_map(
+            function(Product $product){
+                $this->entityManager->remove($product);
+            },
+            $products
+        );
+
         $categories = $this->repositoryFactory->category()->findBySource($source);
 
         array_map(

@@ -13,6 +13,8 @@ class Picture implements ArrayToEntityTransformerInterface
     {
         return
             (new PictureEntity())
+                ->setProduct($data['product'])
+                ->setUrl($data['url'])
             ;
     }
 }
