@@ -29,6 +29,14 @@ class ParserConfig implements ParserConfigInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getProduct($sourceKey): array
+    {
+        return $this->getValueOrThrowException($this->getConfig($sourceKey), 'product');
+    }
+
+    /**
      * @param $sourceKey
      * @return mixed
      * @throws SourceNotFoundException

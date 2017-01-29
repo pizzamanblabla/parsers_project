@@ -24,7 +24,7 @@ SQL
     public function down(Schema $schema)
     {
         $this->addSql(<<<SQL
-            delete from sources where 1;
+            delete from sources;
 SQL
         );
     }

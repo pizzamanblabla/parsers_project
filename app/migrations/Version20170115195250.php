@@ -35,11 +35,11 @@ SQL
         $this->addSql(<<<SQL
             create table products(
                 id serial not null primary key,
-                name character varying(128) not null,
+                name character varying(256) not null,
                 category_id integer not null references categories(id),
                 description character varying(512),
                 characteristics jsonb default '{}'::json,
-                url character varying(128)
+                url character varying(256)
             );
 SQL
         );

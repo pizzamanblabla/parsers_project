@@ -29,15 +29,16 @@ parameters:
                                 price: ".//@data-static-old-price"
                                 price_with_discount: ".//@data-static-now-price"
                                 variants_all: ".//*[contains(@class,'goods_variants_property-item')]/span"
-                            child_page:
-                                name: "product_details"
-                                xpath:
-                                    to_parse:
-                                        description: "//*[@class='goods_view_item-tabs_wrap']//*[@data-tab-link='description']/div"
-                                        weight: "//*[@class='goods_view_item-property_item'][child::*[@class='goods_view_item-property_title'][contains(text(),'Вес')]]//@title"
-                                        product_type: "//*[@class='goods_view_item-property_item'][child::*[@class='goods_view_item-property_title'][contains(text(),'Тип')]]//@title"
-                                        package_type: "//*[@class='goods_view_item-property_item'][child::*[@class='goods_view_item-property_title'][contains(text(),'В упаковк')]]//div[@class='goods_view_item-property_value']"
-                                        brand: "//*[@class='goods_view_item-property_item'][child::*[@class='goods_view_item-property_title'][contains(text(),'Бренд')]]//@title"
-                                        country: "//*[@class='goods_view_item-property_item'][child::*[@class='goods_view_item-property_title'][contains(text(),'Страна')]]//@title"
-                                        lwh: "//*[@class='goods_view_item-property_item'][child::*[@class='goods_view_item-property_title'][contains(text(),'В упаковк')]]//div[@class='goods_view_item-property_value']"
-                                        images_all: "//*[@class='goods_view_item-variant_area']//@data-pic-high"
+
+            product:
+                name: "product"
+                xpath:
+                    to_parse:
+                        description: "//*[@class='goods_view_item-tabs_wrap']//*[@data-tab-link='description']/div"
+                        weight: "//*[@class='goods_view_item-property_item'][child::*[@class='goods_view_item-property_title'][contains(text(),'Вес')]]//@title"
+                        product_type: "//*[@class='goods_view_item-property_item'][child::*[@class='goods_view_item-property_title'][contains(text(),'продукта')]]//@title"
+                        package_type: "//*[@class='goods_view_item-property_item'][child::*[@class='goods_view_item-property_title'][contains(text(),'упаковки')]]//div[@class='goods_view_item-property_value']"
+                        brand: "//*[@class='goods_view_item-property_item'][child::*[@class='goods_view_item-property_title'][contains(text(),'Бренд')]]//@title"
+                        country: "//*[@class='goods_view_item-property_item'][child::*[@class='goods_view_item-property_title'][contains(text(),'Страна')]]//@title"
+                        lwh: "//*[@class='goods_view_item-property_item'][child::*[@class='goods_view_item-property_title'][contains(text(),'В упаковк')]]//div[@class='goods_view_item-property_value']"
+                        images_all: "//*[@class='goods_view_item-variant_area']//@data-pic-high"

@@ -2,6 +2,12 @@ services:
     guzzle.client:
         class: GuzzleHttp\Client
 
+    parsers.jms.object_builder:
+        class: ParserBundle\Internal\ObjectBuilder\JMSObjectBuilder
+        arguments:
+            - '@jms_serializer'
+            - '@logger'
+
     parsers.repository_factory:
         class: ParserBundle\Entity\Repository\Factory
         arguments:
@@ -39,10 +45,27 @@ services:
         arguments:
             - '@parsers.repository_factory'
 
+    parsers.operation.update.persist_data_service_decorator:
+        class: ParserBundle\Operation\Update\Service\PersistDataServiceDecorator
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@parsers.repository_factory'
+            - '@parsers.operation.update.service'
+            - '@logger'
+
     parsers.operation.update.service:
         class: ParserBundle\Operation\Update\Service\Service
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@parsers.repository_factory'
             - '@parsers.operation.parse.service'
+            - '@parsers.operation.update.entity_transformer_factory'
             - '@logger'
+
+    parsers.operation.update.entity_transformer_factory:
+        class: ParserBundle\Operation\Update\Transformer\Factory
+        arguments:
+            -
+                categories: 'category'
+                sub_categories: 'category'
+                product: 'product'

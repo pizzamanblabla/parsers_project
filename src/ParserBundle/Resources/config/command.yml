@@ -2,7 +2,7 @@ services:
     parsers.command.update:
         class: ParserBundle\Command\Update
         arguments:
-            - '@parsers.operation.update.service'
+            - '@parsers.operation.update.persist_data_service_decorator'
             - '@parsers.operation.parse.request_transformer'
             - '@logger'
         tags:

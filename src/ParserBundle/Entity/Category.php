@@ -102,7 +102,7 @@ class Category
      * @param Category $parentCategory
      * @return Category
      */
-    public function setParentCaegory($parentCategory)
+    public function setParentCategory($parentCategory)
     {
         $this->parentCategory = $parentCategory;
         return $this;

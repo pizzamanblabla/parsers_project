@@ -2,6 +2,7 @@
 
 namespace ParserBundle\Internal\Enum;
 
+use Exception;
 use ReflectionClass;
 
 abstract class Enumeration
@@ -18,11 +19,12 @@ abstract class Enumeration
 
     /**
      * @param mixed $value
+     * @throws Exception
      */
     final public function __construct($value)
     {
         if (!static::contains($value)) {
-            throw new \Exception(strtr("'{value}' is not a valid value", ['{value}' => $value]));
+            throw new Exception(strtr("'{value}' is not a valid value", ['{value}' => $value]));
         }
 
         $this->value = $value;
@@ -74,11 +76,12 @@ abstract class Enumeration
 
     /**
      * @return string
+     * @throws Exception
      */
     final public function getName()
     {
         if (!isset($this->names[$this->getValue()])) {
-            throw new \Exception(strtr("Name for value '{value}' does not exists", ['{value}' => $this->getValue()]));
+            throw new Exception(strtr("Name for value '{value}' does not exists", ['{value}' => $this->getValue()]));
         }
 
         return $this->names[$this->getValue()];
@@ -87,6 +90,7 @@ abstract class Enumeration
     /**
      * @param Enumeration|string $value
      * @return boolean
+     * @throws Exception
      */
     public function eq($value)
     {
@@ -95,7 +99,7 @@ abstract class Enumeration
         }
 
         if (!is_a($value, get_class($this))) {
-            throw new \Exception(strtr("'{class}' is not a valid class", ['{class}' => get_class($this)]));
+            throw new Exception(strtr("'{class}' is not a valid class", ['{class}' => get_class($this)]));
         }
         /* @var Enumeration $value */
 

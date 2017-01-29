@@ -52,9 +52,9 @@ class Product
     private $description;
 
     /**
-     * @var array
+     * @var mixed[]
      *
-     * @ORM\Column(name="characteristics", type="array")
+     * @ORM\Column(name="characteristics", type="jsonb")
      */
     private $characteristics = [];
 
