@@ -42,3 +42,9 @@ parameters:
                         country: "//*[@class='goods_view_item-property_item'][child::*[@class='goods_view_item-property_title'][contains(text(),'Страна')]]//@title"
                         lwh: "//*[@class='goods_view_item-property_item'][child::*[@class='goods_view_item-property_title'][contains(text(),'В упаковк')]]//div[@class='goods_view_item-property_value']"
                         images_all: "//*[@class='goods_view_item-variant_area']//@data-pic-high"
+                        variants_all: ".//*[contains(@class,'goods_variants_property-item')]/span"
+                        also_products_all: "//div[@data-content-name='suggest']//*[@class='goods_view_small']/div//a[@class='pic_pic']//@href"
+                        similar_products_all: "//div[@data-content-name='alternative']//*[@class='goods_view_small']/div//a[@class='pic_pic']//@href"
+                        prices:
+                            price: ".//@data-static-old-price"
+                            price_with_discount: ".//@data-static-now-price"

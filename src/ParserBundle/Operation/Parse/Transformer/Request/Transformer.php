@@ -51,15 +51,24 @@ class Transformer implements TransformerInterface
             throw new SourceNotFoundException(sprintf('Source not found by key: %s', $transformable));
         }
 
-        return $this->createRequest($source, $this->getParsingMap($transformable['product'], $transformable['key']));
+        return
+            $this->createRequest(
+                $source,
+                $this->getParsingMap(
+                    $transformable['product'],
+                    $transformable['key']
+                ),
+                $this->resolveUpdateType($transformable['product'])
+            );
     }
 
     /**
      * @param Source $source
      * @param array $map
+     * @param string $updateType
      * @return Request
      */
-    private function createRequest(Source $source, array $map): Request
+    private function createRequest(Source $source, array $map, string $updateType): Request
     {
         return
             (new Request())
@@ -67,6 +76,7 @@ class Transformer implements TransformerInterface
                 ->setKey($source->getKey())
                 ->setRootUrl($source->getRootUrl())
                 ->setParsingMap($map)
+                ->setUpdateType($updateType)
             ;
     }
 
@@ -78,5 +88,14 @@ class Transformer implements TransformerInterface
     private function getParsingMap(bool $isProductCommand, string $key): array
     {
         return $isProductCommand ? $this->parserConfig->getProduct($key) : $this->parserConfig->getMenu($key);
+    }
+
+    /**
+     * @param bool $isProductCommand
+     * @return string
+     */
+    private function resolveUpdateType(bool $isProductCommand)
+    {
+        return $isProductCommand ? 'product' : 'menu';
     }
 }

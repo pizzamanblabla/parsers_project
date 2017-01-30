@@ -50,11 +50,27 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@parsers.repository_factory'
-            - '@parsers.operation.update.service'
+            - '@parsers.operation.update.resolver_service_decorator'
             - '@logger'
 
+    parsers.operation.update.resolver_service_decorator:
+        class: ParserBundle\Operation\Update\Service\ResolverServiceDecorator
+        arguments:
+            -
+                menu: '@parsers.operation.update.service'
+                product: '@parsers.operation.update.update_products'
+
     parsers.operation.update.service:
-        class: ParserBundle\Operation\Update\Service\Service
+        class: ParserBundle\Operation\Update\Service\UpdateMenu
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@parsers.repository_factory'
+            - '@parsers.operation.parse.service'
+            - '@parsers.operation.update.entity_transformer_factory'
+            - '@logger'
+
+    parsers.operation.update.update_products:
+        class: ParserBundle\Operation\Update\Service\UpdateProducts
         arguments:
             - '@doctrine.orm.entity_manager'
             - '@parsers.repository_factory'
@@ -69,3 +85,5 @@ services:
                 categories: 'category'
                 sub_categories: 'category'
                 product: 'product'
+                picture: 'picture'
+                price: 'price'

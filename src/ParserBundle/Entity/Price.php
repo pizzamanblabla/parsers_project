@@ -17,7 +17,7 @@ class Price
      * @ORM\Column(name="id", type="bigint", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="price_id_seq", allocationSize=1, initialValue=1)
+     * @ORM\SequenceGenerator(sequenceName="prices_id_seq", allocationSize=1, initialValue=1)
      */
     private $id;
 
@@ -48,14 +48,14 @@ class Price
     /**
      * @var bool
      *
-     * @ORM\Column(name="has_discount", type="bool")
+     * @ORM\Column(name="has_discount", type="boolean")
      */
     private $hasDiscount;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(name="date", type="string", length=128, nullable=false)
+     * @ORM\Column(name="date", type="datetimetz", length=128, nullable=false)
      */
     private $date;
 

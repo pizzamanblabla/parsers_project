@@ -3,7 +3,7 @@
 namespace ParserBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use ParserBundle\Entity\Source;
+use ParserBundle\Entity\Source as EntitySource;
 
 /**
  * @method findByUrl($url)
@@ -11,10 +11,10 @@ use ParserBundle\Entity\Source;
 class Product extends EntityRepository
 {
     /**
-     * @param Source $source
+     * @param EntitySource $source
      * @return Product[]
      */
-    public function findBySource(Source $source)
+    public function findBySource(EntitySource $source)
     {
         $queryBuilder = $this->createQueryBuilder('p');
 

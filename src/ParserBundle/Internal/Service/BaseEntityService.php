@@ -35,4 +35,16 @@ abstract class BaseEntityService implements ServiceInterface
         $this->entityManager = $entityManager;
         $this->repositoryFactory = $repositoryFactory;
     }
+
+    /**
+     * @param mixed $entities
+     */
+    protected function removeEntities($entities)
+    {
+        if (!empty($entities)) {
+            foreach ($entities as $entity) {
+                $this->entityManager->remove($entity);
+            }
+        }
+    }
 }

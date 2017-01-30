@@ -3,22 +3,13 @@
 namespace ParserBundle\Operation\Update\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
-use ParserBundle\Entity\Category;
-use ParserBundle\Entity\Product;
 use ParserBundle\Entity\Repository\FactoryInterface as RepositoryFactoryInterface;
-use ParserBundle\Entity\Source;
-use ParserBundle\Interaction\Dto\Request\InternalRequestInterface;
-use ParserBundle\Interaction\Dto\Response\EmptyInnerSuccessfulResponse;
-use ParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use ParserBundle\Internal\Service\BaseEntityService;
 use ParserBundle\Internal\Service\ServiceInterface;
-use ParserBundle\Operation\Parse\Dto\Request;
-use ParserBundle\Operation\Parse\Dto\SuccessfulResponse;
-use ParserBundle\Operation\Update\Service\Exception\UnableToGetDataException;
 use ParserBundle\Operation\Update\Transformer\FactoryInterface as TransformerFactoryInterface;
 use Psr\Log\LoggerInterface;
 
-class Service extends BaseEntityService
+abstract class BaseUpdateService extends BaseEntityService
 {
     /**
      * @var ServiceInterface
@@ -33,7 +24,7 @@ class Service extends BaseEntityService
     /**
      * @var array
      */
-    private $keyMap = [
+    protected $keyMap = [
         'categories' => 'category',
         'sub_categories' => 'category',
         'product' => 'product',
@@ -44,6 +35,7 @@ class Service extends BaseEntityService
      * @param RepositoryFactoryInterface $repositoryFactory
      * @param ServiceInterface $service
      * @param TransformerFactoryInterface $transformerFactory
+     * @param array $keyMap
      * @param LoggerInterface $logger
      */
     public function __construct(
@@ -51,70 +43,21 @@ class Service extends BaseEntityService
         RepositoryFactoryInterface $repositoryFactory,
         ServiceInterface $service,
         TransformerFactoryInterface $transformerFactory,
+        array $keyMap,
         LoggerInterface $logger
     ) {
         parent::__construct($entityManager, $repositoryFactory, $logger);
 
         $this->service = $service;
         $this->transformerFactory = $transformerFactory;
-    }
-
-
-    /**
-     * @param InternalRequestInterface|Request $request
-     * @return InternalResponseInterface
-     * @throws UnableToGetDataException
-     */
-    public function behave(InternalRequestInterface $request): InternalResponseInterface
-    {
-        $internalResponse = $this->service->behave($request);
-
-        if ($internalResponse->getType()->isErroneous()) {
-            throw new UnableToGetDataException('Unable to get data for update');
-        }
-
-        $this->logger->info('Clearing previous menu');
-        $this->clearMenu($this->getSource($request->getKey()));
-
-        /** @var SuccessfulResponse $internalResponse */
-        $this->structureAndPersistData(
-            $internalResponse->getData(),
-            ['source' => $this->getSource($request->getKey())]
-        );
-
-        return new EmptyInnerSuccessfulResponse();
-    }
-
-    /**
-     * @param Source $source
-     * @return void
-     */
-    private function clearMenu(Source $source)
-    {
-        $products = $this->repositoryFactory->product()->findBySource($source);
-
-        array_map(
-            function(Product $product){
-                $this->entityManager->remove($product);
-            },
-            $products
-        );
-
-        $categories = $this->repositoryFactory->category()->findBySource($source);
-
-        array_map(
-            function(Category $category){
-                $this->entityManager->remove($category);
-            },
-            $categories
-        );
+        $this->keyMap = $keyMap;
     }
 
     /**
      * @param array $data
      * @param array $additionalData
      */
-    private function structureAndPersistData(array $data, array $additionalData = [])
+    protected function structureAndPersistData(array $data, array $additionalData = [])
     {
         foreach ($data as $key => $element) {
             if (is_array($element) && array_key_exists($key, $this->keyMap)) {
@@ -140,18 +83,9 @@ class Service extends BaseEntityService
 
     /**
      * @param string $key
-     * @return Source
-     */
-    private function getSource(string $key)
-    {
-        return $this->repositoryFactory->source()->findOneByKey($key);
-    }
-
-    /**
-     * @param string $key
      * @return string
      */
-    private function resolveKey(string $key): string
+    protected function resolveKey(string $key): string
     {
         return
             array_key_exists($key, $this->keyMap)

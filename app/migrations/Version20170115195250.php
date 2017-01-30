@@ -57,8 +57,8 @@ SQL
             create table prices(
                 id serial not null primary key,
                 product_id integer not null references products(id),
-                value integer default 0 not null,
-                old_value integer default 0 not null,
+                value double precision default 0 not null,
+                old_value double precision default 0 not null,
                 has_discount bool default false,
                 date timestamptz not null default current_timestamp
             );

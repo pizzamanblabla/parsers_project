@@ -44,8 +44,6 @@ class Service implements ServiceInterface
             $this->logger->warning('Parsing failed');
         }
 
-        //file_put_contents('test.json', json_encode($parsed));die;
-        //$parsed = json_decode(file_get_contents('test.json'), 1);
         return (new SuccessfulResponse())->setData($parsed);
     }
 }

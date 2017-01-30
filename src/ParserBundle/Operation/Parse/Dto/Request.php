@@ -27,6 +27,11 @@ class Request implements InternalRequestInterface
     private $parsingMap;
 
     /**
+     * @var string
+     */
+    private $updateType;
+
+    /**
      * @return int
      */
     public function getId()
@@ -95,6 +100,24 @@ class Request implements InternalRequestInterface
     public function setParsingMap(array $parsingMap)
     {
         $this->parsingMap = $parsingMap;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUpdateType()
+    {
+        return $this->updateType;
+    }
+
+    /**
+     * @param string $updateType
+     * @return Request
+     */
+    public function setUpdateType($updateType)
+    {
+        $this->updateType = $updateType;
         return $this;
     }
 }

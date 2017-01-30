@@ -11,10 +11,19 @@ class Price implements ArrayToEntityTransformerInterface
      */
     public function transform(array $data)
     {
+        if (intval($data["price_with_discount"]) != $data["price"]) {
+            $isDiscount = true;
+        } else {
+            $isDiscount = false;
+        }
+
         return
             (new PriceEntity())
                 ->setProduct($data['product'])
-                ->setValue($data['price'])
+                ->setValue(intval($data["price_with_discount"]))
+                ->setOldValue($data["price"])
+                ->setHasDiscount($isDiscount)
+                ->setDate(new \DateTime())
             ;
     }
 }

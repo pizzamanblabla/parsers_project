@@ -2,6 +2,7 @@
 
 namespace ParserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -59,12 +60,18 @@ class Product
     private $characteristics = [];
 
     /**
-     * @var Product[]
+     * @var ArrayCollection|Product[]
+     *
+     * @ORM\ManyToMany(targetEntity="Product", orphanRemoval=true)
+     * @ORM\JoinTable(name="also_buy", joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}, inverseJoinColumns={@ORM\JoinColumn(name="also_buy_product_id", referencedColumnName="id")})
      */
     private $alsoBuyProducts;
 
     /**
-     * @var Product[]
+     * @var ArrayCollection|Product[]
+     *
+     * @ORM\ManyToMany(targetEntity="Product", orphanRemoval=true)
+     * @ORM\JoinTable(name="similar_products", joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")}, inverseJoinColumns={@ORM\JoinColumn(name="similar_product_id", referencedColumnName="id")})
      */
     private $similarProducts;
 
@@ -195,6 +202,30 @@ class Product
     }
 
     /**
+     * @param Product $product
+     *
+     * @return $this
+     */
+    public function addAlsoBuyProduct(Product $product)
+    {
+        $this->alsoBuyProducts->add($product);
+
+        return $this;
+    }
+
+    /**
+     * @param Product $product
+     *
+     * @return $this
+     */
+    public function removeAlsoBuyProduct(Product $product)
+    {
+        $this->alsoBuyProducts->removeElement($product);
+
+        return $this;
+    }
+
+    /**
      * @return Product[]
      */
     public function getSimilarProducts()
@@ -209,6 +240,30 @@ class Product
     public function setSimilarProducts($similarProducts)
     {
         $this->similarProducts = $similarProducts;
+        return $this;
+    }
+
+    /**
+     * @param Product $product
+     *
+     * @return $this
+     */
+    public function addSimilarProduct(Product $product)
+    {
+        $this->similarProducts->add($product);
+
+        return $this;
+    }
+
+    /**
+     * @param Product $product
+     *
+     * @return $this
+     */
+    public function removeSimilarProduct(Product $product)
+    {
+        $this->similarProducts->removeElement($product);
+
         return $this;
     }
 }
