@@ -37,7 +37,7 @@ SQL
                 id serial not null primary key,
                 name character varying(256) not null,
                 category_id integer not null references categories(id),
-                description character varying(512),
+                description text,
                 characteristics jsonb default '{}'::json,
                 url character varying(256)
             );
