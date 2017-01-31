@@ -71,7 +71,7 @@ class UpdateMenu extends BaseEntityService
             throw new UnableToGetDataException('Unable to get data for update');
         }
 
-        $this->logger->info('Clearing previous menu');
+        $this->logger->info(sprintf('Clearing previous menu of source "%s"', $request->getKey()));
         $this->clearMenu($this->getSource($request->getKey()));
 
         /** @var SuccessfulResponse $internalResponse */

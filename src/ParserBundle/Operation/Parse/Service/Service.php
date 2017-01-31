@@ -3,6 +3,7 @@
 namespace ParserBundle\Operation\Parse\Service;
 
 use ParserBundle\Interaction\Dto\Request\InternalRequestInterface;
+use ParserBundle\Interaction\Dto\Response\EmptyInnerErroneousResponse;
 use ParserBundle\Interaction\Dto\Response\InternalResponseInterface;
 use ParserBundle\Internal\Service\ServiceInterface;
 use ParserBundle\Operation\Parse\Dto\Request;
@@ -37,13 +38,15 @@ class Service implements ServiceInterface
      */
     public function behave(InternalRequestInterface $request): InternalResponseInterface
     {
-        $this->logger->info('Begin parsing');
+        $this->logger->info(sprintf('Begin parsing of source "%s" with url "%s"', $request->getKey(), $request->getRootUrl()));
         $parsed = $this->strategy->parse($request);
 
         if (!is_array($parsed) || empty($parsed)) {
             $this->logger->warning('Parsing failed');
+            return new EmptyInnerErroneousResponse();
         }
 
+        $this->logger->info('Parsing successfully completed');
         return (new SuccessfulResponse())->setData($parsed);
     }
 }

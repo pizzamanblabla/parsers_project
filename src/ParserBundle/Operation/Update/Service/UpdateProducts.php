@@ -73,8 +73,10 @@ class UpdateProducts extends BaseEntityService
 
                 if ($response->getType()->isSuccessful()) {
                     /** @var $response SuccessfulResponse */
-                     $this->removeProductDetails($product);
+                    $this->removeProductDetails($product);
                     $this->updateProduct($product, $response->getData());
+                } else {
+                    $this->logger->warning(sprintf('Product updating skipped id:%s', $product->getId()));
                 }
             },
             $this->repositoryFactory->product()->findBySource($this->getSource($request->getKey()))
